@@ -28,7 +28,7 @@ const Category = () => {
             if (res.ok) {
                 //xóa thành công
                 const updatedEmpData = empdata.filter((item) => item.id !== id)
-                empdata(updatedEmpData)
+                empdatachange(updatedEmpData)
             }
             else {
                 throw new Error("delete fail")
