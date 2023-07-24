@@ -1,0 +1,45 @@
+.carditem {
+  margin-bottom: 20px;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 80px;
+  /* Thêm khoảng cách giữa các card */
+}
+
+.carditem {
+  flex: 0 0 auto;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-list {
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+
+.pagination-item {
+  cursor: pointer;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.pagination-item:hover {
+  background-color: #f2f2f2;
+}
+
+.pagination-item.active {
+  background-color: #333;
+  color: #fff;
+}

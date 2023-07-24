@@ -1,0 +1,18 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.left-column {
+    flex-basis: 20%;
+    /* Chiều rộng của cột trái, bạn có thể điều chỉnh kích thước tùy ý */
+    background-color: #f2f2f2;
+    /* Màu nền của cột trái */
+    padding: 20px;
+    /* Khoảng cách đệm cho cột trái */
+}
+
+.right-column {
+    flex-basis: 80%;
+    /* Chiều rộng của cột phải, tự động điều chỉnh dựa trên phần còn lại */
+}

@@ -1,0 +1,25 @@
+.headercart {
+  float: right;
+  color: azure;
+  margin-left: 30px;
+}
+
+.picturecart {
+  width: 20px;
+  height: 20px;
+}
+
+.textnabar {
+  text-decoration: none;
+  color: rgb(173, 182, 189);
+  padding-left: 15px;
+  margin-right: 15px;
+  margin-top: 9px;
+}
+
+.cartItemCount {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 1px;
+  /* Điều chỉnh khoảng cách giữa hình ảnh và số lượng */
+}

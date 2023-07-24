@@ -1,0 +1,21 @@
+.body {
+  width: 100%;
+  background-color: rgb(55, 98, 197);
+  padding: 40px 40px 40px 40px;
+}
+.textfooter {
+  font-size: 25px;
+  color: aliceblue;
+}
+.textfootern {
+  font-size: 18px;
+  color: aliceblue;
+}
+.iconsize {
+  width: 20px;
+  height: 20px;
+}
+.iconsize1 {
+  width: 30px;
+  height: 30px;
+}

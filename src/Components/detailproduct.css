@@ -1,0 +1,43 @@
+.imgcart {
+    margin-top: 40px;
+    margin-left: 80px;
+    width: 400px;
+    height: 600px;
+}
+
+.namespdetail {
+    float: left;
+    color: black;
+    font-size: 40px;
+    margin-left: 30px;
+}
+
+.bodydetai {
+    margin-top: 30px;
+}
+
+.loaisp {
+    float: left;
+    clear: left;
+    font-size: 25px;
+    margin-top: 20px;
+    margin-left: 30px;
+}
+
+.category-label {
+    display: block;
+}
+
+.boderimg {
+    border: 3px solid rgb(129, 107, 111);
+    border-radius: 10px;
+    background-color: beige;
+}
+
+.buttonsdetail {
+    float: left;
+    clear: left;
+    font-size: 25px;
+    margin-top: 40px;
+    margin-left: 30px;
+}
