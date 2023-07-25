@@ -12,10 +12,13 @@ import Viewproduct from "./Components/admin/product";
 import AdminHeaderAndFooterWrapper from "./layout/adminheaderandfooterwrapper";
 import HeaderAndFooterWrapper from "./layout/headerandfooterwrapper";
 import Category from "./Components/admin/category";
+import { useState } from "react";
 
 function App() {
-  const isAdminRoute = (pathname) => pathname.startsWith("/admin");
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isAdminRoute = (pathname) => {
+    return pathname.startsWith('/admin');
+  };
   return (
     <div className="App">
       <Router>

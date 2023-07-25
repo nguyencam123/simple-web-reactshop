@@ -13,6 +13,7 @@ import {
 }
   from 'mdb-react-ui-kit';
 import axios from 'axios';
+import "./login.css";
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -31,22 +32,29 @@ function Login() {
     try {
       // Gửi yêu cầu đăng nhập đến API với username và password từ state của bạn
       const response = await axios.post('http://localhost:8080/api/viewaccount', {
-        username: username, // Thay 'username' bằng state chứa username của bạn
-        password: password, // Thay 'password' bằng state chứa password của bạn
+        username: username,
+        password: password,
       });
 
-      // Xử lý phản hồi từ API
-      if (response.data.admin === 0) {
-        // Đăng nhập thành công với vai trò user
-        // Thực hiện các hành động bạn muốn khi đăng nhập thành công, ví dụ chuyển hướng đến localhost:3000
-        window.location.href = 'http://localhost:3000';
+      // Lấy danh sách tài khoản từ phản hồi API
+      const accounts = response.data;
+
+      // Kiểm tra xem thông tin đăng nhập có khớp với bất kỳ tài khoản nào trong danh sách không
+      const matchedAccount = accounts.find((account) => account.username === username && account.password === password);
+
+      if (matchedAccount) {
+        if (matchedAccount.admin === 0) {
+          // Đăng nhập thành công với vai trò user
+          window.location.href = 'http://localhost:3000';
+        } else {
+          // Đăng nhập thành công với vai trò admin
+          window.location.href = 'http://localhost:3000/admin';
+        }
       } else {
-        // Đăng nhập thành công với vai trò admin
-        // Thực hiện các hành động bạn muốn khi đăng nhập thành công, ví dụ chuyển hướng đến localhost:3000/admin/*
-        window.location.href = 'http://localhost:3000/admin';
+        // Thông báo đăng nhập không thành công nếu thông tin không khớp với bất kỳ tài khoản nào trong danh sách
+        alert('Đăng nhập không thành công. Vui lòng kiểm tra lại tài khoản và mật khẩu.');
       }
     } catch (error) {
-      // Xử lý lỗi nếu có
       console.error('Đăng nhập thất bại:', error);
     }
   };
@@ -69,31 +77,17 @@ function Login() {
         <MDBTabsPane show={justifyActive === 'tab1'}>
           <div className="text-center mb-3">
             <p>Sign in with:</p>
-            <div className='d-flex justify-content-between mx-auto' style={{ width: '40%' }}>
-              <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#1266f1' }}>
-                <MDBIcon fab icon='facebook-f' size="sm" />
-              </MDBBtn>
-              <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#1266f1' }}>
-                <MDBIcon fab icon='twitter' size="sm" />
-              </MDBBtn>
-              <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#1266f1' }}>
-                <MDBIcon fab icon='google' size="sm" />
-              </MDBBtn>
-              <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#1266f1' }}>
-                <MDBIcon fab icon='github' size="sm" />
-              </MDBBtn>
-            </div>
-            <p className="text-center mt-3">or:</p>
           </div>
-          <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email' required
+          <MDBInput wrapperClass='mb-4' label='Email address' type='email' required
             onChange={(e) => setUsername(e.target.value)} />
-          <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password' required
+          <MDBInput wrapperClass='mb-4' label='Password' type='password' required
             onChange={(e) => setPassword(e.target.value)} />
           <div className="d-flex justify-content-between mx-4 mb-4">
             <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
             <a href="!#">Forgot password?</a>
           </div>
-          <MDBBtn className="mb-4 w-100">Sign in</MDBBtn>
+          <MDBBtn className="mb-4 w-100 custom-button" onClick={handleSubmit}>Sign in</MDBBtn>
+
           <p className="text-center">Not a member? <a href="#!">Register</a></p>
         </MDBTabsPane>
         <MDBTabsPane show={justifyActive === 'tab2'}>
@@ -122,7 +116,7 @@ function Login() {
           <div className='d-flex justify-content-center mb-4'>
             <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I have read and agree to the terms' />
           </div>
-          <MDBBtn className="mb-4 w-100" onClick={handleSubmit}>Sign up</MDBBtn>
+          <MDBBtn className="mb-4 w-100 custom-button" onClick={handleSubmit}>Sign up</MDBBtn>
         </MDBTabsPane>
       </MDBTabsContent>
     </MDBContainer>

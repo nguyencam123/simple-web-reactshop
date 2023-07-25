@@ -9,6 +9,11 @@ import { useState, useEffect } from "react";
 import "./home.css";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
+import {
+  MDBCard,
+  MDBCardBody,
+  MDBRipple,
+} from "mdb-react-ui-kit";
 
 function Home() {
   var [empdata, empdatachange] = useState(null);
@@ -21,7 +26,7 @@ function Home() {
   const [selectedPriceRange, setSelectedPriceRange] = useState("");
   const [searchname, setsearchname] = useState("")
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
   useEffect(() => {
     fetch("http://localhost:8080/api/viewproduct")
       .then((res) => {
@@ -172,21 +177,57 @@ function Home() {
               {currentItems &&
                 currentItems.map((item) => (
                   <div className="col-xl-3 col-lg-4 col-md-6">
-                    <div className="carditem">
-                      <Card style={{ width: "18rem" }}>
-                        <Card.Img
-                          variant="top"
-                          src={require(`../assets/${item.image}`)}
-                        />
-                        <Card.Body>
-                          <Card.Title>{item.name}</Card.Title>
-                          <Card.Text>{item.price}$</Card.Text>
-                          <Link to={`/Detail/${item.id}`}>
-                            <Button variant="primary">See details</Button>
-                          </Link>
-                        </Card.Body>
-                      </Card>
-                    </div>
+                    <Link to={`/Detail/${item.id}`} className="custom-link">
+                      {/* <div className="carditem">
+                        <Card style={{ width: "18rem" }}>
+                          <Card.Img
+                            variant="top"
+                            src={require(`../assets/${item.image}`)}
+                          />
+                          <Card.Body>
+                            <Card.Title>{item.name}</Card.Title>
+                            <Card.Text>{item.price}$</Card.Text>
+                          </Card.Body>
+                        </Card>
+                      </div> */}
+
+                      <MDBCard>
+                        <MDBRipple
+                          rippleColor="light"
+                          rippleTag="div"
+                          className="bg-image rounded hover-zoom"
+                        >
+                          <Card.Img
+                            variant="top"
+                            src={require(`../assets/${item.image}`)}
+                          />
+                          <a href="#!">
+                            <div className="mask">
+                              <div className="d-flex justify-content-start align-items-end h-100">
+                                <h5>
+                                  <span className="badge bg-success ms-2">Eco</span>
+                                  <span className="badge bg-danger ms-2">-10%</span>
+                                </h5>
+                              </div>
+                            </div>
+                            <div className="hover-overlay">
+                              <div
+                                className="mask"
+                                style={{ backgroundColor: "rgba(251, 251, 251, 0.15)" }}
+                              ></div>
+                            </div>
+                          </a>
+                        </MDBRipple>
+                        <MDBCardBody>
+                          <a href="#!" className="text-reset">
+                            <h5 className="card-title mb-3">{item.name}</h5>
+                          </a>
+                          <h6 className="mb-3">
+                            <strong className="ms-2 text-danger">{item.price}</strong>
+                          </h6>
+                        </MDBCardBody>
+                      </MDBCard>
+                    </Link>
                   </div>
                 ))}
             </div>

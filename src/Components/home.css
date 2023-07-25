@@ -43,3 +43,8 @@
   background-color: #333;
   color: #fff;
 }
+
+.custom-link {
+  text-decoration: none;
+  color: black;
+}
