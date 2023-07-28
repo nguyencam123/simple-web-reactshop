@@ -45,9 +45,15 @@ function Login() {
       if (matchedAccount) {
         if (matchedAccount.admin === 0) {
           // Đăng nhập thành công với vai trò user
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('isAdmin', 'false');
+          localStorage.setItem('username', matchedAccount.username)
           window.location.href = 'http://localhost:3000';
         } else {
           // Đăng nhập thành công với vai trò admin
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('isAdmin', 'true');
+          localStorage.setItem('username', matchedAccount.username)
           window.location.href = 'http://localhost:3000/admin';
         }
       } else {
@@ -116,7 +122,7 @@ function Login() {
           <div className='d-flex justify-content-center mb-4'>
             <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I have read and agree to the terms' />
           </div>
-          <MDBBtn className="mb-4 w-100 custom-button" onClick={handleSubmit}>Sign up</MDBBtn>
+          <MDBBtn className="mb-4 w-100 custom-button">Sign up</MDBBtn>
         </MDBTabsPane>
       </MDBTabsContent>
     </MDBContainer>

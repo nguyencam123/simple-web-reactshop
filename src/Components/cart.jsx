@@ -132,7 +132,7 @@ const Cart = () => {
                                     <p>
                                         <strong>Expected shipping delivery</strong>
                                     </p>
-                                    <p className="mb-0">12.10.2020 - 14.10.2020</p>
+                                    <p className="mb-0">12.8.2023 - 14.8.2023</p>
                                 </MDBCardBody>
                             </MDBCard>
 
