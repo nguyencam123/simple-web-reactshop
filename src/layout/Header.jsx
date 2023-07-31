@@ -20,7 +20,10 @@ function Header() {
       setCartItems(JSON.parse(storedCartItems));
     }
   }, [cartItems]);
-
+  const deleteaccount = () => {
+    localStorage.removeItem('username')
+    localStorage.removeItem('cartItems')
+  }
   return (
     <>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -65,7 +68,7 @@ function Header() {
               <Link to="/login" className="headercart">
                 <span className="picturecart">
                   <img src={myimgperson} alt="" width={"35px"} height={"35px"} />
-                  {name}
+                  <button type="button" class="btn btn-primary" onClick={deleteaccount}>log out ({name})</button>
                 </span>
               </Link>
             </div>

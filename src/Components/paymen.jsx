@@ -9,20 +9,25 @@ import {
     MDBCardImage,
     MDBCol,
     MDBContainer,
+    MDBIcon,
     MDBInput,
     MDBListGroup,
     MDBListGroupItem,
     MDBRipple,
     MDBRow,
+    MDBTooltip,
     MDBTypography,
 } from "mdb-react-ui-kit";
 import "./cart.css";
+import { Link } from "react-router-dom";
+import Button from "react-bootstrap/esm/Button"
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 
-const Cart = () => {
-    // Lấy danh sách sản phẩm từ localStorage khi trang được tải
+const Payment = () => {
+    var [address, setaddress] = useState("")
     const [cartItems, setCartItems] = useState([]);
-    const [idoder, setidoder] = useState(null);
-    const [orderId, setOrderId] = useState(null);
     useEffect(() => {
         const storedCartItems = localStorage.getItem('cartItems');
         if (storedCartItems) {
@@ -55,23 +60,8 @@ const Cart = () => {
         localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     };
     var name = localStorage.getItem("username");
-    useEffect(() => {
-        fetch(`http://localhost:8080/api/oder/serbyuser?username=${name}`)
-            .then((res) => res.json())
-            .then((resp) => {
-                setidoder(resp); // Update the state with fetched data using setidoder function
-
-                // Assuming resp is an array and contains at least one item
-                if (Array.isArray(resp) && resp.length > 0) {
-                    setOrderId(resp[0].id); // Extract the 'id' from the first item and set it in the orderId state
-                }
-            })
-            .catch((err) => {
-                console.log(err.message);
-            });
-    }, []);
-    var name = localStorage.getItem("username");
     var items = localStorage.getItem("cartItems");
+
     const handleAddoder = () => {
         const cartItems = JSON.parse(items);
         if (Array.isArray(cartItems) && cartItems.length > 0) {
@@ -84,8 +74,11 @@ const Cart = () => {
                     id: productId
                 }, // Use the product ID instead of the entire product object
                 order: {
-                    id: orderId
-                }
+                    address: address,
+                },
+                account: {
+                    username: name,
+                },
             };
 
             fetch("http://localhost:8080/api/addoder", {
@@ -97,13 +90,13 @@ const Cart = () => {
             })
                 .then((res) => {
                     if (res.ok) {
-                        alert("mua thành công")
                         return res.json();
                     } else {
                         throw new Error("thêm thất bại");
                     }
                 })
                 .then((resp) => {
+                    setaddress("");
                 })
                 .catch((err) => {
                     console.log(err);
@@ -113,6 +106,21 @@ const Cart = () => {
         }
     };
 
+
+    const test = () => {
+        if (items) {
+            const cartItems = JSON.parse(items);
+
+            // Assuming cartItems is an array containing the object(s)
+            if (Array.isArray(cartItems) && cartItems.length > 0) {
+                const firstItem = cartItems[0]; // Get the first object from the array
+
+                // Access the "id" property of the first item
+                const id = firstItem.id;
+                console.log(id); // This will log the id of the first item in the array
+            }
+        }
+    }
     return (
         <div>
             <section className="h-100 gradient-custom">
@@ -127,7 +135,6 @@ const Cart = () => {
                                 </MDBCardHeader>
                                 <MDBCardBody>
                                     <MDBRow>
-
                                         {cartItems.length === 0 ? (
                                             <p>Giỏ hàng trống</p>
                                         ) : (
@@ -184,34 +191,7 @@ const Cart = () => {
                                 </MDBCardBody>
                             </MDBCard>
 
-                            <MDBCard className="mb-4">
-                                <MDBCardBody>
-                                    <p>
-                                        <strong>Expected shipping delivery</strong>
-                                    </p>
-                                    <p className="mb-0">12.8.2023 - 14.8.2023</p>
-                                </MDBCardBody>
-                            </MDBCard>
 
-                            <MDBCard className="mb-4 mb-lg-0">
-                                <MDBCardBody>
-                                    <p>
-                                        <strong>We accept</strong>
-                                    </p>
-                                    <MDBCardImage className="me-2" width="45px"
-                                        src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
-                                        alt="Visa" />
-                                    <MDBCardImage className="me-2" width="45px"
-                                        src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
-                                        alt="American Express" />
-                                    <MDBCardImage className="me-2" width="45px"
-                                        src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
-                                        alt="Mastercard" />
-                                    <MDBCardImage className="me-2" width="45px"
-                                        src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.png"
-                                        alt="PayPal acceptance mark" />
-                                </MDBCardBody>
-                            </MDBCard>
                         </MDBCol>
                         <MDBCol md="4">
                             <MDBCard className="mb-4">
@@ -232,20 +212,25 @@ const Cart = () => {
                                             <span>Gratis</span>
                                         </MDBListGroupItem>
                                         <MDBListGroupItem
+                                            className="d-flex justify-content-between align-items-center border-0 px-0 mb-3"><div>
+                                                <strong>Address</strong>
+                                                <Form.Group as={Row} className="mb-3">
+                                                    <Col sm="8">
+                                                        <Form.Control type="text" placeholder="adress" required
+                                                            onChange={(e) => setaddress(e.target.value)} />
+                                                    </Col>
+                                                </Form.Group>
+                                            </div></MDBListGroupItem>
+                                        <MDBListGroupItem
                                             className="d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                                            <div>
-                                                <strong>Total amount</strong>
-                                                <strong>
-                                                    <p className="mb-0">(including VAT)</p>
-                                                </strong>
-                                            </div>
+                                            <div>price</div>
                                             <span>
                                                 <strong>${total}</strong>
                                             </span>
                                         </MDBListGroupItem>
                                     </MDBListGroup>
                                     <MDBBtn block size="lg" onClick={handleAddoder}>
-                                        buy now
+                                        odernow
                                     </MDBBtn>
                                 </MDBCardBody>
                             </MDBCard>
@@ -254,8 +239,6 @@ const Cart = () => {
                 </MDBContainer>
             </section>
         </div>
-
-    );
-};
-
-export default Cart  
+    )
+}
+export default Payment

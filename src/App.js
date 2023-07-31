@@ -3,7 +3,9 @@ import Home from "./Components/Home";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Insert from "./Components/Insert";
 import LoginForm from "./Components/Login";
+import Account from "./Components/admin/account";
 import Edit from "./Components/Update";
+import Payment from "./Components/paymen";
 import Mymanage from "./Components/khachhang";
 import Detail from "./Components/detailproduct";
 import Cart from "./Components/cart";
@@ -56,6 +58,7 @@ function App() {
                   <Routes>
                     <Route path="/admin/*" element={<Viewproduct />} /> {/* Sử dụng nested layout cho khu vực /admin */}
                     <Route path="/admin/viewcategory" element={<Category />} />
+                    <Route path="/admin/account" element={<Account />} />
                   </Routes>
                 </AdminHeaderAndFooterWrapper>
               ) : (
@@ -68,6 +71,7 @@ function App() {
                     <Route path="/khachhang/view" element={<Mymanage />} />
                     <Route path="/Detail/:getid" element={<Detail />} />
                     <Route path="/shopingcart" element={<Cart />} />
+                    <Route path="/cart/payment-info" element={<Payment />} />
                     {/* Sử dụng nested layout cho khu vực /admin */}
                   </Routes>
                 </HeaderAndFooterWrapper>

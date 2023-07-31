@@ -14,17 +14,39 @@ import {
   from 'mdb-react-ui-kit';
 import axios from 'axios';
 import "./login.css";
+import { useEffect } from 'react';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [justifyActive, setJustifyActive] = useState('tab1');;
+  const [usernamesignup, setUsernamesignup] = useState('');
+  const [passwordsignup, setPasswordsignup] = useState('');
+  const [email, setEmail] = useState("");
+  const [fullname, setFullName] = useState("");
+  const [address, setAddress] = useState("");
+  const [justifyActive, setJustifyActive] = useState('tab1');
+  //
+
+  const [empdata, empdatachange] = useState([])
+  const name = localStorage.getItem('username')
+  useEffect(() => {
+    fetch(`http://localhost:8080/api/oder/serbyuseroderdetail?username=${name}`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((resp) => {
+        empdatachange(resp);
+        console.log(resp);
+      })
+      .catch((err) => {
+        console.log(err.massage);
+      });
+  }, []);
 
   const handleJustifyClick = (value) => {
     if (value === justifyActive) {
       return;
     }
-
     setJustifyActive(value);
   };
 
@@ -64,7 +86,72 @@ function Login() {
       console.error('Đăng nhập thất bại:', error);
     }
   };
+  const addaccount = () => {
+    const newcategory = {
+      username: usernamesignup,
+      password: passwordsignup,
+      email: email,
+      fullname: fullname,
+    };
 
+    return fetch("http://localhost:8080/api/account/addaccount", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newcategory)
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error("thêm thất bại");
+      }
+    }).then((resp) => {
+      setPasswordsignup("");
+      setFullName("");
+      setEmail("");
+    }).catch((err) => {
+      console.log(err);
+    });
+  };
+
+  const addoder = () => {
+    const newitems = {
+      address: address,
+      account: {
+        username: usernamesignup
+      }
+    };
+
+    return fetch("http://localhost:8080/api/addoderdetail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newitems)
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error("thêm thất bại");
+      }
+    }).then((resp) => {
+      setUsernamesignup("");
+      setAddress("");
+    }).catch((err) => {
+      console.log(err);
+    });
+  };
+
+
+
+  const handleSignUp = () => {
+    addaccount()
+      .then(() => addoder())
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
       <MDBTabs pills justify className='mb-3 d-flex flex-row justify-content-between'>
@@ -76,6 +163,11 @@ function Login() {
         <MDBTabsItem>
           <MDBTabsLink onClick={() => handleJustifyClick('tab2')} active={justifyActive === 'tab2'}>
             Register
+          </MDBTabsLink>
+        </MDBTabsItem>
+        <MDBTabsItem>
+          <MDBTabsLink onClick={() => handleJustifyClick('tab3')} active={justifyActive === 'tab3'}>
+            purchased product
           </MDBTabsLink>
         </MDBTabsItem>
       </MDBTabs>
@@ -98,31 +190,41 @@ function Login() {
         </MDBTabsPane>
         <MDBTabsPane show={justifyActive === 'tab2'}>
           <div className="text-center mb-3">
-            <p>Sign un with:</p>
-            <div className='d-flex justify-content-between mx-auto' style={{ width: '40%' }}>
-              <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#1266f1' }}>
-                <MDBIcon fab icon='facebook-f' size="sm" />
-              </MDBBtn>
-              <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#1266f1' }}>
-                <MDBIcon fab icon='twitter' size="sm" />
-              </MDBBtn>
-              <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#1266f1' }}>
-                <MDBIcon fab icon='google' size="sm" />
-              </MDBBtn>
-              <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#1266f1' }}>
-                <MDBIcon fab icon='github' size="sm" />
-              </MDBBtn>
-            </div>
-            <p className="text-center mt-3">or:</p>
+
           </div>
-          <MDBInput wrapperClass='mb-4' label='Name' id='form1' type='text' />
-          <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='text' />
-          <MDBInput wrapperClass='mb-4' label='Email' id='form1' type='email' />
-          <MDBInput wrapperClass='mb-4' label='Password' id='form1' type='password' />
+          <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='text' required onChange={(e) => setUsernamesignup(e.target.value)} />
+          <MDBInput wrapperClass='mb-4' label='Password' id='form1' type='password' required onChange={(e) => setPasswordsignup(e.target.value)} />
+          <MDBInput wrapperClass='mb-4' label='Email' id='form1' type='email' required onChange={(e) => setEmail(e.target.value)} />
+          <MDBInput wrapperClass='mb-4' label='Name' id='form1' type='text' required onChange={(e) => setFullName(e.target.value)} />
+          <MDBInput wrapperClass='mb-4' label='address' id='form1' type='text' required onChange={(e) => setAddress(e.target.value)} />
           <div className='d-flex justify-content-center mb-4'>
             <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I have read and agree to the terms' />
           </div>
-          <MDBBtn className="mb-4 w-100 custom-button">Sign up</MDBBtn>
+          <MDBBtn className="mb-4 w-100 custom-button" onClick={handleSignUp}>Sign up</MDBBtn>
+        </MDBTabsPane>
+        <MDBTabsPane show={justifyActive === 'tab3'}>
+          <table className="table">
+            <thead>
+              <th>name product</th>
+              <th>price</th>
+              <th>category</th>
+              <th>address</th>
+              <th>name</th>
+            </thead>
+            <tbody>
+              {
+                empdata.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.product.name}</td>
+                    <td>{item.price}</td>
+                    <td>{item.product.category.name}</td>
+                    <td>{item.order.address}</td>
+                    <td>{item.order.account.fullname}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
         </MDBTabsPane>
       </MDBTabsContent>
     </MDBContainer>
