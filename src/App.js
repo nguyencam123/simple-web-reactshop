@@ -38,8 +38,9 @@ function App() {
 
   //Cập nhật isAdminRoute bất cứ khi nào isLoggedIn hoặc isAdmin thay đổi
   const isAdminRoute = (pathname) => {
-    return pathname.startsWith('/admin');
+    return isLoggedIn && isAdmin && pathname.startsWith('/admin');
   };
+
 
 
   useEffect(() => {

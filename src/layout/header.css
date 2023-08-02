@@ -1,7 +1,16 @@
 .headercart {
-  float: right;
-  color: azure;
-  margin-left: 30px;
+  position: relative;
+}
+
+.cartAndPerson {
+  display: flex;
+  /* This makes the cart and person icons appear in the same row */
+  align-items: center;
+  /* This centers the icons vertically */
+}
+
+.cartItemCount {
+  margin-left: 5px;
 }
 
 .picturecart {
@@ -22,4 +31,42 @@
   vertical-align: middle;
   margin-left: 1px;
   /* Điều chỉnh khoảng cách giữa hình ảnh và số lượng */
+}
+
+.headerpreson {
+  position: relative;
+}
+
+.pictureperson {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 200px;
+  background-color: #827e7e;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 8px;
+  display: none;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-menu button {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+  background-color: #314f38;
 }

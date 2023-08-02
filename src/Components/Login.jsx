@@ -143,8 +143,6 @@ function Login() {
     });
   };
 
-
-
   const handleSignUp = () => {
     addaccount()
       .then(() => addoder())
@@ -184,7 +182,7 @@ function Login() {
             <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
             <a href="!#">Forgot password?</a>
           </div>
-          <MDBBtn className="mb-4 w-100 custom-button" onClick={handleSubmit}>Sign in</MDBBtn>
+          <MDBBtn className="mb-4 w-100 custom-button" onClick={handleSubmit} activeOpacity={1}>Sign in</MDBBtn>
 
           <p className="text-center">Not a member? <a href="#!">Register</a></p>
         </MDBTabsPane>

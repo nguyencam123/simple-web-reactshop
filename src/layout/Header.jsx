@@ -7,9 +7,9 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
 import mying from "../assets/shopping_cart_FILL0_wght400_GRAD0_opsz48.png";
 import myimgperson from "../assets/person_FILL0_wght400_GRAD0_opsz48.png";
-import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+
 
 function Header() {
   var name = localStorage.getItem("username");
@@ -23,7 +23,25 @@ function Header() {
   const deleteaccount = () => {
     localStorage.removeItem('username')
     localStorage.removeItem('cartItems')
+    localStorage.removeItem('isLoggedIn')
   }
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const cheackloginstatus = () => {
+    const checkitem = localStorage.getItem('isLoggedIn')
+    setIsLoggedIn(checkitem == 'true');
+  }
+  useEffect(() => {
+    cheackloginstatus()
+  }, [cheackloginstatus])
+  const handleDropdownToggle = () => {
+    if (!isLoggedIn) {
+      window.location.href = "/login"; // Redirect to /login if not logged in
+    } else {
+      setShowDropdown(!showDropdown); // Toggle the dropdown if logged in
+    }
+  };
+
   return (
     <>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -57,20 +75,29 @@ function Header() {
               </NavDropdown>
             </Nav>
             <div className="headercart">
-              <Link to="/shopingcart" className="headercart">
-                <span className="picturecart">
-                  <span className="cc">
-                    <img src={mying} alt="" width={"35px"} height={"35px"} />
-                    <span className="cartItemCount">({cartItems.length})</span>
+              <div className="cartAndPerson">
+                <Link to="/shopingcart" className="headercart">
+                  <span className="picturecart">
+                    <span className="cc">
+                      <img src={mying} alt="" width={"35px"} height={"35px"} />
+                      <span className="cartItemCount">({cartItems.length})</span>
+                    </span>
                   </span>
-                </span>
-              </Link>
-              <Link to="/login" className="headercart">
-                <span className="picturecart">
+                </Link>
+                <span className="pictureperson" onClick={handleDropdownToggle}>
                   <img src={myimgperson} alt="" width={"35px"} height={"35px"} />
-                  <button type="button" class="btn btn-primary" onClick={deleteaccount}>log out ({name})</button>
                 </span>
-              </Link>
+              </div>
+              {isLoggedIn ? ( // Render dropdown only if the user is logged in
+                <div className={`dropdown-menu ${showDropdown ? "show" : ""}`}>
+                  <button type="button" className="btn btn-primary" onClick={deleteaccount}>
+                    Đăng xuất ({name})
+                  </button>
+                  <button type="button" className="btn btn-primary">
+                    Thông tin người dùng
+                  </button>
+                </div>
+              ) : null}
             </div>
           </Navbar.Collapse>
         </Container>

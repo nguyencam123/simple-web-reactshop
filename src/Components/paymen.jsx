@@ -190,8 +190,6 @@ const Payment = () => {
                                     </MDBRow>
                                 </MDBCardBody>
                             </MDBCard>
-
-
                         </MDBCol>
                         <MDBCol md="4">
                             <MDBCard className="mb-4">

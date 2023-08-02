@@ -72,44 +72,60 @@ const Cart = () => {
     }, []);
     var name = localStorage.getItem("username");
     var items = localStorage.getItem("cartItems");
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const cheackloginstatus = () => {
+        const checkitem = localStorage.getItem('isLoggedIn')
+        setIsLoggedIn(checkitem == 'true');
+    }
+    useEffect(() => {
+        cheackloginstatus()
+    }, [])
     const handleAddoder = () => {
-        const cartItems = JSON.parse(items);
-        if (Array.isArray(cartItems) && cartItems.length > 0) {
-            const firstItem = cartItems[0];
-            const productId = firstItem.id; // Assuming this is the ID of the product
+        if (!isLoggedIn) {
+            alert("bạn cần đăng nhập để có thể đặt hàng")
+            return window.location.href = 'http://localhost:3000/login'
+        } else if (items == null) {
+            alert("bạn chưa có sản phẩm nào trong giỏ hàng")
+        }
+        else {
+            const cartItems = JSON.parse(items);
+            if (Array.isArray(cartItems) && cartItems.length > 0) {
+                const firstItem = cartItems[0];
+                const productId = firstItem.id; // Assuming this is the ID of the product
 
-            const newoder = {
-                price: total,
-                product: {
-                    id: productId
-                }, // Use the product ID instead of the entire product object
-                order: {
-                    id: orderId
-                }
-            };
-
-            fetch("http://localhost:8080/api/addoder", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(newoder),
-            })
-                .then((res) => {
-                    if (res.ok) {
-                        alert("mua thành công")
-                        return res.json();
-                    } else {
-                        throw new Error("thêm thất bại");
+                const newoder = {
+                    price: total,
+                    product: {
+                        id: productId
+                    }, // Use the product ID instead of the entire product object
+                    order: {
+                        id: orderId
                     }
+                };
+
+                fetch("http://localhost:8080/api/addoder", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(newoder),
                 })
-                .then((resp) => {
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        } else {
-            console.log("cartItems is empty or not an array");
+                    .then((res) => {
+                        if (res.ok) {
+                            alert("mua thành công")
+                            return res.json();
+                        } else {
+                            throw new Error("thêm thất bại");
+                        }
+                    })
+                    .then((resp) => {
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            } else {
+                console.log("cartItems is empty or not an array");
+            }
         }
     };
 
