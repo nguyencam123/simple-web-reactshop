@@ -15,6 +15,10 @@ import {
 import axios from 'axios';
 import "./login.css";
 import { useEffect } from 'react';
+import { notification } from 'antd';
+import type { NotificationPlacement } from 'antd/es/notification/interface';
+import { useNavigate } from 'react-router-dom';
+
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -49,6 +53,7 @@ function Login() {
     }
     setJustifyActive(value);
   };
+  const history = useNavigate();
 
   const handleSubmit = async () => {
     try {
@@ -70,7 +75,7 @@ function Login() {
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('isAdmin', 'false');
           localStorage.setItem('username', matchedAccount.username)
-          window.location.href = 'http://localhost:3000';
+          history('/')
         } else {
           // Đăng nhập thành công với vai trò admin
           localStorage.setItem('isLoggedIn', 'true');
@@ -150,6 +155,22 @@ function Login() {
         console.log(err);
       });
   };
+  const handleSubmitt = () => {
+    // Thực hiện xử lý login tại đây
+    // Sau khi xử lý thành công, hiển thị thông báo
+    openNotification('topRight');
+  };
+  const handleSignIn = () => {
+    handleSubmit();
+    handleSubmitt();
+  };
+  const openNotification = (placement: NotificationPlacement) => {
+    notification.info({
+      message: 'Thông báo',
+      description: 'chào mừng bạn đã đến với CAMPHONES!',
+      placement,
+    });
+  };
   return (
     <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
       <MDBTabs pills justify className='mb-3 d-flex flex-row justify-content-between'>
@@ -161,11 +182,6 @@ function Login() {
         <MDBTabsItem>
           <MDBTabsLink onClick={() => handleJustifyClick('tab2')} active={justifyActive === 'tab2'}>
             Register
-          </MDBTabsLink>
-        </MDBTabsItem>
-        <MDBTabsItem>
-          <MDBTabsLink onClick={() => handleJustifyClick('tab3')} active={justifyActive === 'tab3'}>
-            purchased product
           </MDBTabsLink>
         </MDBTabsItem>
       </MDBTabs>
@@ -182,7 +198,7 @@ function Login() {
             <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
             <a href="!#">Forgot password?</a>
           </div>
-          <MDBBtn className="mb-4 w-100 custom-button" onClick={handleSubmit} activeOpacity={1}>Sign in</MDBBtn>
+          <MDBBtn className="mb-4 w-100 custom-button" onClick={handleSignIn} activeOpacity={1}>Sign in</MDBBtn>
 
           <p className="text-center">Not a member? <a href="#!">Register</a></p>
         </MDBTabsPane>
@@ -199,30 +215,6 @@ function Login() {
             <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I have read and agree to the terms' />
           </div>
           <MDBBtn className="mb-4 w-100 custom-button" onClick={handleSignUp}>Sign up</MDBBtn>
-        </MDBTabsPane>
-        <MDBTabsPane show={justifyActive === 'tab3'}>
-          <table className="table">
-            <thead>
-              <th>name product</th>
-              <th>price</th>
-              <th>category</th>
-              <th>address</th>
-              <th>name</th>
-            </thead>
-            <tbody>
-              {
-                empdata.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.product.name}</td>
-                    <td>{item.price}</td>
-                    <td>{item.product.category.name}</td>
-                    <td>{item.order.address}</td>
-                    <td>{item.order.account.fullname}</td>
-                  </tr>
-                ))
-              }
-            </tbody>
-          </table>
         </MDBTabsPane>
       </MDBTabsContent>
     </MDBContainer>

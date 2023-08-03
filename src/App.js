@@ -16,6 +16,7 @@ import Category from "./Components/admin/category";
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import PrivateAdminRoutefunction from "./PrivateAdminRoute";
+import Propertiesuser from "./Components/propertiesuser";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -73,6 +74,7 @@ function App() {
                     <Route path="/Detail/:getid" element={<Detail />} />
                     <Route path="/shopingcart" element={<Cart />} />
                     <Route path="/cart/payment-info" element={<Payment />} />
+                    <Route path="/user/propreties" element={<Propertiesuser />} />
                     {/* Sử dụng nested layout cho khu vực /admin */}
                   </Routes>
                 </HeaderAndFooterWrapper>

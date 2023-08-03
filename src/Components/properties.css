@@ -1,0 +1,127 @@
+.columsuser {
+    border: 1px solid rgb(200, 196, 196);
+    border-radius: 12px;
+    width: 95%;
+    height: 450px;
+    margin-top: 25px;
+    margin-left: 25px;
+    margin-bottom: 25px;
+    position: relative;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.userpicture {
+    border: 1px solid rgb(179, 175, 175);
+    border-radius: 50%;
+    position: absolute;
+    margin-top: 20px;
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+}
+
+.sizeimg {
+    width: 150px;
+    height: 150px;
+
+}
+
+.custom-icon {
+    font-size: 130px;
+    color: red;
+    /* Các thuộc tính CSS khác tùy ý */
+}
+
+.texthello {
+    margin-top: 190px;
+    position: absolute;
+
+}
+
+.textnameuser {
+    margin-top: 230px;
+    font-size: 25px;
+    position: absolute;
+    color: red;
+}
+
+.createdate {
+    position: relative;
+    margin-top: 300px;
+    font-size: 48px;
+    margin-right: 100px;
+}
+
+.createdate2 {
+    position: relative;
+    margin-top: 300px;
+    font-size: 48px;
+}
+
+.createdate3 {
+    position: relative;
+    margin-top: 300px;
+    font-size: 48px;
+    margin-left: 100px;
+}
+
+.textdate1 {
+    position: absolute;
+    margin-top: 280px;
+    margin-right: 300px;
+}
+
+.textdate2 {
+    position: absolute;
+    margin-top: 280px;
+
+}
+
+.textdate3 {
+    position: absolute;
+    margin-top: 280px;
+    margin-left: 300px;
+}
+
+.createdateoder {
+    position: absolute;
+    margin-top: 400px;
+    margin-right: 350px;
+}
+
+.createdatettichluy {
+    position: absolute;
+    margin-top: 400px;
+    margin-left: 300px;
+}
+
+.columuerbuy {
+    border: 1px solid rgb(200, 196, 196);
+    border-radius: 12px;
+    width: 95%;
+    height: 450px;
+    margin-top: 25px;
+    margin-left: 25px;
+    margin-bottom: 25px;
+    position: relative;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.orderbyuser {
+    font-size: 28px;
+    margin-top: 20px;
+}
+
+.viewtable {
+    position: absolute;
+    margin-top: 90px;
+}
+
+.imgcartpro {
+    width: 30px;
+    height: 40px;
+}

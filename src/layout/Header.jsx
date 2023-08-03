@@ -41,7 +41,9 @@ function Header() {
       setShowDropdown(!showDropdown); // Toggle the dropdown if logged in
     }
   };
-
+  useEffect(() => {
+    setShowDropdown(false);
+  }, [isLoggedIn]);
   return (
     <>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -93,9 +95,11 @@ function Header() {
                   <button type="button" className="btn btn-primary" onClick={deleteaccount}>
                     Đăng xuất ({name})
                   </button>
-                  <button type="button" className="btn btn-primary">
-                    Thông tin người dùng
-                  </button>
+                  <Link to="/user/propreties">
+                    <button type="button" className="btn btn-primary">
+                      Thông tin người dùng
+                    </button>
+                  </Link>
                 </div>
               ) : null}
             </div>
